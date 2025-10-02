@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Místico | Consultas Espirituais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #e0d4f7;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(75, 0, 130, 0.3);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(147, 112, 219, 0.3);
+            box-shadow: 0 8px 32px rgba(147, 112, 219, 0.2);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #da77f2, #b197fc, #da77f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(218, 119, 242, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #c5a9e8;
+            font-style: italic;
+        }
+
+        .section {
+            background: rgba(43, 24, 88, 0.6);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(147, 112, 219, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(147, 112, 219, 0.3);
+        }
+
+        h2 {
+            color: #da77f2;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #b197fc, transparent);
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(138, 43, 226, 0.1));
+            border: 2px solid #9370db;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(-1deg);
+            }
+            75% {
+                transform: translateY(-8px) rotate(0.5deg);
+            }
+        }
+
+        .price-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .price-card:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .price-card:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .price-card:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        .price-card:nth-child(5) {
+            animation-delay: 2s;
+        }
+
+        .price-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(218, 119, 242, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .price-card:hover:before {
+            left: 100%;
+        }
+
+        .price-card:hover {
+            transform: scale(1.08) translateY(-5px);
+            border-color: #da77f2;
+            box-shadow: 0 0 30px rgba(218, 119, 242, 0.4);
+            animation: none;
+        }
+
+        .price-title {
+            font-size: 1.2em;
+            color: #b197fc;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .price-value {
+            font-size: 1.8em;
+            color: #da77f2;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .price-details {
+            color: #d0bfea;
+            line-height: 1.6;
+            font-size: 0.85em;
+        }
+
+        .info-box {
+            background: rgba(75, 0, 130, 0.3);
+            border-left: 4px solid #da77f2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .list-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(147, 112, 219, 0.2);
+            line-height: 1.8;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item:before {
+            content: '✦ ';
+            color: #da77f2;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #7c3aed, #a855f7);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 30px auto;
+            display: block;
+            width: fit-content;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(168, 85, 247, 0.6);
+            background: linear-gradient(45deg, #a855f7, #7c3aed);
+        }
+
+        .schedule-info {
+            background: linear-gradient(135deg, rgba(218, 119, 242, 0.1), rgba(177, 151, 252, 0.1));
+            border: 2px solid #b197fc;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .denied, .accepted {
+            margin: 25px 0;
+        }
+
+        .denied h3, .accepted h3 {
+            color: #da77f2;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .denied ul, .accepted ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .denied ul li {
+            color: #ff9999;
+            margin: 0;
+            padding: 15px 15px 15px 45px;
+            position: relative;
+            background: rgba(255, 99, 99, 0.1);
+            border: 2px solid rgba(255, 99, 99, 0.3);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            animation: shake 3s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+            20%, 40%, 60%, 80% { transform: translateX(2px); }
+        }
+
+        .denied ul li:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+
+        .denied ul li:nth-child(even) {
+            animation-delay: 1s;
+        }
+
+        .denied ul li:hover {
+            transform: scale(1.03);
+            background: rgba(255, 99, 99, 0.15);
+            border-color: rgba(255, 99, 99, 0.5);
+            box-shadow: 0 5px 20px rgba(255, 99, 99, 0.3);
+            animation: none;
+        }
+
+        .denied ul li:before {
+            content: '❌';
+            position: absolute;
+            left: 15px;
+            font-size: 1.3em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .accepted ul li {
+            color: #b0e0b0;
+            margin: 0;
+            padding: 15px 15px 15px 45px;
+            position: relative;
+            background: rgba(144, 238, 144, 0.1);
+            border: 2px solid rgba(144, 238, 144, 0.3);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            animation: glow-card 4s ease-in-out infinite;
+        }
+
+        @keyframes glow-card {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(144, 238, 144, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(144, 238, 144, 0.4);
+            }
+        }
+
+        .accepted ul li:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .accepted ul li:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .accepted ul li:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .accepted ul li:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        .accepted ul li:nth-child(5) {
+            animation-delay: 2s;
+        }
+
+        .accepted ul li:nth-child(6) {
+            animation-delay: 2.5s;
+        }
+
+        .accepted ul li:nth-child(7) {
+            animation-delay: 3s;
+        }
+
+        .accepted ul li:hover {
+            transform: translateY(-5px) scale(1.03);
+            background: rgba(144, 238, 144, 0.15);
+            border-color: rgba(144, 238, 144, 0.5);
+            box-shadow: 0 8px 25px rgba(144, 238, 144, 0.4);
+            animation: none;
+        }
+
+        .accepted ul li:before {
+            content: '✨';
+            position: absolute;
+            left: 15px;
+            color: #90ee90;
+            font-weight: bold;
+            font-size: 1.3em;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .bonus {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(218, 119, 242, 0.1));
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .bonus h3 {
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .price-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 1200px) and (min-width: 769px) {
+            .price-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .price-card:nth-child(5) {
+                grid-column: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>🌙 Tarot Místico 🌙</h1>
+            <p class="subtitle">Desperte sua intuição e encontre respostas no universo</p>
+        </header>
+
+        <section class="section">
+            <h2>✨ Valores das Consultas</h2>
+            <div class="price-grid">
+                <div class="price-card">
+                    <div class="price-title">1 Pergunta</div>
+                    <div class="price-value">R$ 7,00</div>
+                    <div class="price-details">
+                        • 3 cartas por pergunta<br>
+                        • Áudio mínimo de 1 minuto<br>
+                        • Foto das cartas
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-title">3 Perguntas</div>
+                    <div class="price-value">R$ 15,00</div>
+                    <div class="price-details">
+                        • 3 cartas por pergunta<br>
+                        • Áudio mínimo de 1 minuto cada<br>
+                        • Foto das cartas
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-title">5 Perguntas</div>
+                    <div class="price-value">R$ 20,00</div>
+                    <div class="price-details">
+                        • 3 cartas por pergunta<br>
+                        • Áudio mínimo de 1 minuto cada<br>
+                        • Foto das cartas
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-title">7 Perguntas</div>
+                    <div class="price-value">R$ 25,00</div>
+                    <div class="price-details">
+                        • 3 cartas por pergunta<br>
+                        • Áudio mínimo de 1 minuto cada<br>
+                        • Foto das cartas
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-title">30 Minutos</div>
+                    <div class="price-value">R$ 55,00</div>
+                    <div class="price-details">
+                        <strong>Escolha seu método:</strong><br>
+                        • 1 carta por pergunta (mais perguntas)<br>
+                        <strong>OU</strong><br>
+                        • 3 cartas por pergunta (mais detalhes)<br><br>
+                        Áudio + foto em ambos os métodos
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>⏰ Horários de Atendimento</h2>
+            <div class="schedule-info">
+                <p style="font-size: 1.2em; margin-bottom: 15px;">
+                    <strong>Segunda a Sexta:</strong> 15h às 18h (por ordem de chegada)
+                </p>
+                <p style="font-size: 1.1em; color: #ffd700;">
+                    <strong>Sábado e Domingo:</strong> Apenas com agendamento prévio
+                </p>
+            </div>
+
+            <div class="info-box">
+                <div class="list-item">
+                    <strong>Atendimento fora do horário?</strong> É possível! Agende comigo com pelo menos 1 dia de antecedência.
+                </div>
+                <div class="list-item">
+                    Se eu não conseguir responder sua pergunta até às 18h devido ao fluxo intenso, você receberá <span class="highlight">1 pergunta extra gratuita</span> que será respondida no dia seguinte no horário de atendimento.
+                </div>
+                <div class="list-item">
+                    Eu aviso quando inicio suas tiragens para você acompanhar.
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📋 Como Funciona</h2>
+            
+            <div class="info-box">
+                <h3 style="color: #da77f2; margin-bottom: 15px;">Para consultas de 1 a 7 perguntas:</h3>
+                <div class="list-item">Envie todas as suas perguntas de uma vez</div>
+                <div class="list-item">Envie o comprovante de pagamento com seu nome completo</div>
+                <div class="list-item">Se houver outras pessoas envolvidas, informe os nomes delas</div>
+            </div>
+
+            <div class="info-box">
+                <h3 style="color: #da77f2; margin-bottom: 15px;">Para consultas de 30 minutos:</h3>
+                <div class="list-item">Escolha previamente o método (1 carta ou 3 cartas por pergunta)</div>
+                <div class="list-item">Envie o comprovante de pagamento para iniciar</div>
+                <div class="list-item"><strong>Importante:</strong> O contador inicia quando começo a consulta. Responderei a última pergunta que conseguir finalizar dentro dos 30 minutos, não necessariamente a última que você enviar.</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🚫 Perguntas Não Aceitas</h2>
+            <div class="denied">
+                <ul style="list-style: none;">
+                    <li>Sobre traição (ex: "ele está me traindo?")</li>
+                    <li>Com intenção de manipular alguém (ex: "como fazer ele voltar?")</li>
+                    <li>Previsões exatas de tempo (ex: "em que dia vou conseguir emprego?")</li>
+                    <li>Que violem a privacidade de terceiros sem envolvimento direto</li>
+                    <li>Que busquem controle absoluto sem esforço próprio</li>
+                    <li>Decisões ilegais ou antiéticas</li>
+                    <li>Respostas fechadas (sim/não) sem abertura para reflexão</li>
+                    <li>Questões médicas ou diagnósticos</li>
+                    <li>Morte ou acidentes com tom fatalista</li>
+                    <li>Confirmar medos irracionais</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>✅ Perguntas Aceitas</h2>
+            <div class="accepted">
+                <ul style="list-style: none;">
+                    <li><strong>Autoconhecimento:</strong> Compreenda suas emoções, padrões e potenciais</li>
+                    <li><strong>Orientação:</strong> Receba conselhos sobre como agir e se posicionar</li>
+                    <li><strong>Reflexão sobre situações:</strong> Ganhe clareza sobre o que está acontecendo</li>
+                    <li><strong>Energia do momento:</strong> Entenda o que está vibrando em sua vida</li>
+                    <li><strong>Relacionamentos:</strong> Como melhorar e compreender seus vínculos (foco em você)</li>
+                    <li><strong>Caminhos e possibilidades:</strong> Explore alternativas e escolhas disponíveis</li>
+                    <li><strong>Espiritualidade e propósito:</strong> Conecte-se com seu eu interior e missão de vida</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="bonus">
+                <h3>🎁 Programa de Indicação</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    A cada indicação comprovada, você ganha <span class="highlight">1 pergunta gratuita</span> com 3 cartas e áudio de 1 minuto!
+                </p>
+            </div>
+        </section>
+
+        <section class="section" style="text-align: center;">
+            <h2>💜 Agende Sua Consulta</h2>
+            <p style="font-size: 1.2em; margin: 25px 0; line-height: 1.8;">
+                Entre em contato pelo WhatsApp e deixe o universo guiar suas respostas
+            </p>
+                <a href="https://wa.me/5534988894192?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta%20com%20voce!" class="whatsapp-btn" target="_blank">  📱 Chamar no WhatsApp
+            </a>
+            <p style="color: #b197fc; margin-top: 15px; font-style: italic;">
+            </p>
+        </section>
+    </div>
+
+    <script>
+        // Criar estrelas animadas
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>
