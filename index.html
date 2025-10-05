@@ -278,6 +278,7 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .price-card::before {
@@ -480,6 +481,248 @@
 
         .bonus-section p {
             font-size: 1.2em;
+        }
+
+        .feedback-section {
+            margin: 60px 0;
+            display: none;
+        }
+
+        .feedback-section.visible {
+            display: block;
+        }
+
+        .view-feedbacks-btn {
+            background: rgba(90, 24, 154, 0.2);
+            border: 2px solid #5a189a;
+            color: #e0c3ff;
+            padding: 12px 30px;
+            font-size: 0.95em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .view-feedbacks-btn:hover {
+            border-color: #9d4edd;
+            background: rgba(157, 78, 221, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .feedback-form-container {
+            background: linear-gradient(145deg, rgba(90, 24, 154, 0.15), rgba(13, 2, 33, 0.3));
+            border: 2px solid #5a189a;
+            padding: 30px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feedback-form-container h3 {
+            font-size: 1.3em;
+        }
+
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            color: #e0c3ff;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(13, 2, 33, 0.6);
+            border: 2px solid #5a189a;
+            color: #f0e6ff;
+            padding: 12px 15px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #9d4edd;
+            background: rgba(13, 2, 33, 0.8);
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .rating-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .star-rating {
+            cursor: pointer;
+            color: #5a189a;
+            transition: all 0.3s;
+        }
+
+        .star-rating:hover,
+        .star-rating.active {
+            color: #fbbf24;
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px #fbbf24);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #7209b7, #9d4edd);
+            color: #ffffff;
+            padding: 15px 40px;
+            border: 2px solid transparent;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #9d4edd, #b794f6);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.5);
+            border-color: #e0c3ff;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .feedbacks-container {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feedbacks-container.visible {
+            display: grid;
+        }
+
+        .feedback-card {
+            background: linear-gradient(145deg, rgba(90, 24, 154, 0.15), rgba(13, 2, 33, 0.4));
+            border: 2px solid #5a189a;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delete-feedback-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(185, 28, 28, 0.3);
+            border: 1px solid rgba(185, 28, 28, 0.5);
+            color: #fca5a5;
+            padding: 5px 10px;
+            font-size: 0.85em;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .feedback-card:hover .delete-feedback-btn {
+            opacity: 1;
+        }
+
+        .delete-feedback-btn:hover {
+            background: rgba(185, 28, 28, 0.5);
+            border-color: rgba(185, 28, 28, 0.8);
+            transform: scale(1.05);
+        }
+
+        .feedback-toggle-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .feedback-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4em;
+            color: rgba(157, 78, 221, 0.2);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .feedback-card:hover {
+            border-color: #9d4edd;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feedback-name {
+            color: #e0c3ff;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .feedback-stars {
+            color: #fbbf24;
+            font-size: 1.2em;
+        }
+
+        .feedback-text {
+            color: #c9b3e6;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feedback-date {
+            color: #7c3aed;
+            font-size: 0.85em;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .feedback-form-container {
+                padding: 25px;
+            }
+
+            .feedbacks-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         .highlight-text {
@@ -772,7 +1015,50 @@
             </div>
         </section>
 
-        <section class="cta-section">
+        <section class="feedback-section" id="feedbackSection">
+            <div class="section-header">
+                <h2 class="section-title">Depoimentos</h2>
+                <p class="section-subtitle">Deixe seu feedback sobre a consulta</p>
+            </div>
+
+            <div class="feedback-form-container">
+                <h3 style="color: #e0c3ff; text-align: center; margin-bottom: 25px; font-family: 'Playfair Display', serif;">Compartilhe sua experiência</h3>
+                <form class="feedback-form" id="feedbackForm">
+                    <div class="form-group">
+                        <label>Seu nome:</label>
+                        <input type="text" id="feedbackName" required placeholder="Como podemos te chamar?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Avaliação:</label>
+                        <div class="rating-container" id="ratingContainer">
+                            <span class="star-rating" data-rating="1">★</span>
+                            <span class="star-rating" data-rating="2">★</span>
+                            <span class="star-rating" data-rating="3">★</span>
+                            <span class="star-rating" data-rating="4">★</span>
+                            <span class="star-rating" data-rating="5">★</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Seu depoimento:</label>
+                        <textarea id="feedbackText" required placeholder="Conte sobre sua experiência..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">ENVIAR DEPOIMENTO</button>
+                </form>
+            </div>
+
+            <div class="feedback-toggle-section">
+                <button class="view-feedbacks-btn" id="toggleFeedbacksBtn">Ver Depoimentos</button>
+            </div>
+
+            <div class="feedbacks-container" id="feedbacksContainer">
+                <!-- Feedbacks aparecerão aqui -->
+            </div>
+        </section>
+
+        <section class="cta-section" id="whatsapp-section">
             <div class="ornament-line">
                 <span class="ornament-symbol">◆</span>
             </div>
@@ -780,9 +1066,10 @@
             <p style="font-size: 1.15em; color: #c9b3e6;">
                 Entre em contato pelo WhatsApp
             </p>
-            <a href="https://wa.me/5534988894192?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta%20com%20você!%20vim%20pelo%20seu%20site" class="cta-btn" target="_blank">
+            <a href="https://wa.me/5534988894192?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta%20com%20você!" class="cta-btn" target="_blank">
                 CHAMAR NO WHATSAPP
-            </a>
+            </a> 
+            <p>Após realizar sua consulta, volte e deixe seu feedback! :)</p>
         </section>
     </div>
 
@@ -914,7 +1201,181 @@
                 this.appendChild(ripple);
                 setTimeout(() => ripple.remove(), 800);
             });
+
+            // Scroll para WhatsApp ao clicar no card de preço
+            card.addEventListener('click', function() {
+                document.getElementById('whatsapp-section').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
         });
+
+        // Sistema de avaliação por estrelas
+        let selectedRating = 0;
+        const stars = document.querySelectorAll('.star-rating');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.getAttribute('data-rating'));
+                updateStars();
+            });
+            
+            star.addEventListener('mouseenter', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        document.getElementById('ratingContainer').addEventListener('mouseleave', updateStars);
+        
+        function updateStars() {
+            stars.forEach((s, index) => {
+                if (index < selectedRating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        }
+
+        // Carregar feedbacks do localStorage
+        function loadFeedbacks() {
+            const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
+            displayFeedbacks(feedbacks);
+        }
+
+        function displayFeedbacks(feedbacks) {
+            const container = document.getElementById('feedbacksContainer');
+            container.innerHTML = '';
+            
+            if (feedbacks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #b794f6; grid-column: 1/-1;">Nenhum depoimento ainda. Seja o primeiro!</p>';
+                return;
+            }
+            
+            feedbacks.reverse().forEach((feedback, index) => {
+                const card = document.createElement('div');
+                card.className = 'feedback-card';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                const starsHtml = '★'.repeat(feedback.rating) + '☆'.repeat(5 - feedback.rating);
+                
+                card.innerHTML = `
+                    <button class="delete-feedback-btn" data-index="${feedbacks.length - 1 - index}">Remover</button>
+                    <div class="feedback-header">
+                        <div class="feedback-name">${feedback.name}</div>
+                        <div class="feedback-stars">${starsHtml}</div>
+                    </div>
+                    <div class="feedback-text">${feedback.text}</div>
+                    <div class="feedback-date">${feedback.date}</div>
+                `;
+                
+                container.appendChild(card);
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+
+            // Adicionar event listeners para os botões de deletar
+            document.querySelectorAll('.delete-feedback-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    deleteFeedback(index);
+                });
+            });
+        }
+
+        function deleteFeedback(index) {
+            if (confirm('Tem certeza que deseja remover este depoimento?')) {
+                const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
+                feedbacks.splice(index, 1);
+                localStorage.setItem('tarotFeedbacks', JSON.stringify(feedbacks));
+                loadFeedbacks();
+            }
+        }
+
+        // Mostrar seção de feedback ao clicar no WhatsApp
+        document.querySelector('.cta-btn').addEventListener('click', function(e) {
+            document.getElementById('feedbackSection').classList.add('visible');
+        });
+
+        // Toggle para mostrar/ocultar feedbacks
+        document.getElementById('toggleFeedbacksBtn').addEventListener('click', function() {
+            const container = document.getElementById('feedbacksContainer');
+            const isVisible = container.classList.contains('visible');
+            
+            if (isVisible) {
+                container.classList.remove('visible');
+                this.textContent = 'Ver Depoimentos';
+            } else {
+                container.classList.add('visible');
+                this.textContent = 'Ocultar Depoimentos';
+                loadFeedbacks();
+            }
+        });
+
+        // Enviar feedback
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (selectedRating === 0) {
+                alert('Por favor, selecione uma avaliação de estrelas!');
+                return;
+            }
+            
+            const name = document.getElementById('feedbackName').value;
+            const text = document.getElementById('feedbackText').value;
+            
+            const feedback = {
+                name: name,
+                rating: selectedRating,
+                text: text,
+                date: new Date().toLocaleDateString('pt-BR')
+            };
+            
+            const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
+            feedbacks.push(feedback);
+            localStorage.setItem('tarotFeedbacks', JSON.stringify(feedbacks));
+            
+            // Explosão de partículas
+            const btn = document.querySelector('.submit-btn');
+            const rect = btn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createParticle(centerX, centerY);
+                }, i * 20);
+            }
+            
+            // Limpar formulário
+            document.getElementById('feedbackName').value = '';
+            document.getElementById('feedbackText').value = '';
+            selectedRating = 0;
+            updateStars();
+            
+            // Recarregar feedbacks
+            setTimeout(() => {
+                loadFeedbacks();
+                alert('Obrigada pelo seu feedback! ✨');
+            }, 500);
+        });
+
+        // Carregar feedbacks ao iniciar
+        loadFeedbacks();
 
         const style = document.createElement('style');
         style.textContent = `
