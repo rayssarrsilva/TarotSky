@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarot Místico | Consultas Espirituais</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -12,13 +14,26 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            color: #e0d4f7;
-            overflow-x: hidden;
+            font-family: 'Raleway', sans-serif;
+            background: #0d0221;
+            color: #f0e6ff;
+            line-height: 1.7;
         }
 
-        .stars {
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(75, 0, 130, 0.15) 0%, transparent 50%),
+                #0d0221;
+            z-index: -1;
+        }
+
+        .stars-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -30,398 +45,507 @@
 
         .star {
             position: absolute;
+            width: 2px;
+            height: 2px;
             background: white;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            box-shadow: 0 0 3px white;
+            animation: twinkle 3s ease-in-out infinite;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-300px, 300px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #9d4edd;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 0 10px #9d4edd;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
+            padding: 0 25px;
         }
 
         header {
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(75, 0, 130, 0.3);
-            border-radius: 20px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(147, 112, 219, 0.3);
-            box-shadow: 0 8px 32px rgba(147, 112, 219, 0.2);
+            padding: 70px 20px 50px;
+            position: relative;
+        }
+
+        .header-ornament {
+            font-size: 2em;
+            color: #b794f6;
+            margin-bottom: 15px;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(183, 148, 246, 0.5);
+            }
+            50% { 
+                transform: scale(1.1);
+                text-shadow: 0 0 20px rgba(183, 148, 246, 0.8);
+            }
         }
 
         h1 {
+            font-family: 'Playfair Display', serif;
             font-size: 3.5em;
-            background: linear-gradient(45deg, #da77f2, #b197fc, #da77f2);
+            font-weight: 700;
+            background: linear-gradient(135deg, #e0c3ff 0%, #b794f6 50%, #9d4edd 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(218, 119, 242, 0.5);
-            animation: glow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            animation: title-glow 3s ease-in-out infinite;
         }
 
-        @keyframes glow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
+        @keyframes title-glow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.3));
+            }
+            50% { 
+                filter: drop-shadow(0 0 25px rgba(157, 78, 221, 0.6));
+            }
         }
 
-        .subtitle {
+        .tagline {
             font-size: 1.3em;
-            color: #c5a9e8;
-            font-style: italic;
+            color: #c9b3e6;
+            font-weight: 300;
+            letter-spacing: 1px;
         }
 
-        .section {
-            background: rgba(43, 24, 88, 0.6);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(147, 112, 219, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .ornament-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            gap: 15px;
         }
 
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(147, 112, 219, 0.3);
+        .ornament-line::before,
+        .ornament-line::after {
+            content: '';
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #9d4edd, transparent);
         }
 
-        h2 {
-            color: #da77f2;
-            font-size: 2.2em;
-            margin-bottom: 25px;
-            text-align: center;
+        .ornament-symbol {
+            color: #9d4edd;
+            font-size: 1.2em;
+            display: inline-block;
+            animation: rotate-symbol 4s linear infinite;
+        }
+
+        @keyframes rotate-symbol {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 35px 0;
+        }
+
+        .social-btn {
+            text-decoration: none;
+            color: #e0c3ff;
+            font-size: 1em;
+            padding: 12px 32px;
+            border: 2px solid #5a189a;
+            background: rgba(90, 24, 154, 0.1);
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 1px;
             position: relative;
-            padding-bottom: 15px;
+            overflow: hidden;
         }
 
-        h2:after {
+        .social-btn::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #b197fc, transparent);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(157, 78, 221, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        .price-grid {
+        .social-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .social-btn:hover {
+            border-color: #9d4edd;
+            background: rgba(157, 78, 221, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.4);
+        }
+
+        .social-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: #e0c3ff;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            color: #b794f6;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .prices-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-top: 30px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .price-card {
-            background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(138, 43, 226, 0.1));
-            border: 2px solid #9370db;
-            border-radius: 15px;
-            padding: 20px;
+            background: linear-gradient(145deg, rgba(90, 24, 154, 0.2), rgba(13, 2, 33, 0.4));
+            border: 2px solid #5a189a;
+            padding: 35px 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-10px) rotate(1deg);
-            }
-            50% {
-                transform: translateY(-5px) rotate(-1deg);
-            }
-            75% {
-                transform: translateY(-8px) rotate(0.5deg);
-            }
+        .price-card::before {
+            content: '✦';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #9d4edd;
+            font-size: 1.2em;
+            opacity: 0.5;
+            transition: all 0.4s;
         }
 
-        .price-card:nth-child(1) {
-            animation-delay: 0s;
+        .price-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .price-card:nth-child(2) {
-            animation-delay: 0.5s;
+        .price-card:hover {
+            border-color: #9d4edd;
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.5);
+            background: linear-gradient(145deg, rgba(90, 24, 154, 0.3), rgba(13, 2, 33, 0.5));
         }
 
-        .price-card:nth-child(3) {
-            animation-delay: 1s;
+        .price-card:hover::before {
+            transform: translateX(-50%) rotate(180deg) scale(1.3);
+            opacity: 1;
+            text-shadow: 0 0 15px #9d4edd;
         }
 
-        .price-card:nth-child(4) {
-            animation-delay: 1.5s;
+        .price-card:hover::after {
+            opacity: 1;
         }
 
-        .price-card:nth-child(5) {
-            animation-delay: 2s;
+        .price-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #c9b3e6;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
         }
 
-        .price-card:before {
+        .price-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: #e0c3ff;
+            margin: 15px 0;
+            font-weight: 700;
+        }
+
+        .price-features {
+            font-size: 0.9em;
+            color: #b794f6;
+            line-height: 1.6;
+        }
+
+        .info-section {
+            background: rgba(90, 24, 154, 0.15);
+            border: 1px solid #5a189a;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .info-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: #e0c3ff;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: rgba(13, 2, 33, 0.5);
+            border-left: 3px solid #9d4edd;
+            padding: 20px 25px;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            background: rgba(90, 24, 154, 0.2);
+            transform: translateX(5px);
+        }
+
+        .schedule-highlight {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(90, 24, 154, 0.2));
+            border: 2px solid #7209b7;
+            padding: 35px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .schedule-highlight p {
+            font-size: 1.15em;
+            margin: 12px 0;
+        }
+
+        .schedule-highlight strong {
+            color: #e0c3ff;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .question-item {
+            background: rgba(13, 2, 33, 0.6);
+            border: 1px solid #5a189a;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent, currentColor, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .question-item:hover {
+            transform: scale(1.05) translateY(-3px);
+        }
+
+        .question-item:hover::before {
+            opacity: 0.5;
+        }
+
+        .denied-item {
+            border-color: rgba(185, 28, 28, 0.5);
+            color: #fca5a5;
+        }
+
+        .denied-item:hover {
+            border-color: rgba(185, 28, 28, 0.8);
+            background: rgba(185, 28, 28, 0.1);
+        }
+
+        .accepted-item {
+            border-color: rgba(34, 139, 34, 0.5);
+        }
+
+        .accepted-item:hover {
+            border-color: rgba(34, 139, 34, 0.8);
+            background: rgba(34, 139, 34, 0.1);
+        }
+
+        .accepted-title {
+            color: #e0c3ff;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .accepted-desc {
+            color: #86efac;
+            font-size: 0.9em;
+        }
+
+        .bonus-section {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(157, 78, 221, 0.15));
+            border: 2px solid #ca8a04;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .bonus-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: #fbbf24;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .bonus-section p {
+            font-size: 1.2em;
+        }
+
+        .highlight-text {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #7209b7, #9d4edd);
+            color: #ffffff;
+            padding: 18px 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(218, 119, 242, 0.2), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
         }
 
-        .price-card:hover:before {
+        .cta-btn:hover::before {
             left: 100%;
         }
 
-        .price-card:hover {
-            transform: scale(1.08) translateY(-5px);
-            border-color: #da77f2;
-            box-shadow: 0 0 30px rgba(218, 119, 242, 0.4);
-            animation: none;
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #9d4edd, #b794f6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(157, 78, 221, 0.6);
+            border-color: #e0c3ff;
         }
 
-        .price-title {
-            font-size: 1.2em;
-            color: #b197fc;
-            margin-bottom: 10px;
-            font-weight: bold;
+        .cta-btn:active {
+            transform: translateY(-3px) scale(1.02);
         }
 
-        .price-value {
-            font-size: 1.8em;
-            color: #da77f2;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .price-details {
-            color: #d0bfea;
-            line-height: 1.6;
-            font-size: 0.85em;
-        }
-
-        .info-box {
-            background: rgba(75, 0, 130, 0.3);
-            border-left: 4px solid #da77f2;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .list-item {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(147, 112, 219, 0.2);
-            line-height: 1.8;
-        }
-
-        .list-item:last-child {
-            border-bottom: none;
-        }
-
-        .list-item:before {
-            content: '✦ ';
-            color: #da77f2;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .highlight {
-            color: #ffd700;
-            font-weight: bold;
-        }
-
-        .whatsapp-btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #7c3aed, #a855f7);
-            color: white;
-            padding: 20px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin: 30px auto;
-            display: block;
-            width: fit-content;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
-        }
-
-        .whatsapp-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(168, 85, 247, 0.6);
-            background: linear-gradient(45deg, #a855f7, #7c3aed);
-        }
-
-        .schedule-info {
-            background: linear-gradient(135deg, rgba(218, 119, 242, 0.1), rgba(177, 151, 252, 0.1));
-            border: 2px solid #b197fc;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .denied, .accepted {
-            margin: 25px 0;
-        }
-
-        .denied h3, .accepted h3 {
-            color: #da77f2;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .denied ul, .accepted ul {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .denied ul li {
-            color: #ff9999;
-            margin: 0;
-            padding: 15px 15px 15px 45px;
-            position: relative;
-            background: rgba(255, 99, 99, 0.1);
-            border: 2px solid rgba(255, 99, 99, 0.3);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            animation: shake 3s ease-in-out infinite;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-            20%, 40%, 60%, 80% { transform: translateX(2px); }
-        }
-
-        .denied ul li:nth-child(odd) {
-            animation-delay: 0.5s;
-        }
-
-        .denied ul li:nth-child(even) {
-            animation-delay: 1s;
-        }
-
-        .denied ul li:hover {
-            transform: scale(1.03);
-            background: rgba(255, 99, 99, 0.15);
-            border-color: rgba(255, 99, 99, 0.5);
-            box-shadow: 0 5px 20px rgba(255, 99, 99, 0.3);
-            animation: none;
-        }
-
-        .denied ul li:before {
-            content: '❌';
-            position: absolute;
-            left: 15px;
-            font-size: 1.3em;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        .accepted ul li {
-            color: #b0e0b0;
-            margin: 0;
-            padding: 15px 15px 15px 45px;
-            position: relative;
-            background: rgba(144, 238, 144, 0.1);
-            border: 2px solid rgba(144, 238, 144, 0.3);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            animation: glow-card 4s ease-in-out infinite;
-        }
-
-        @keyframes glow-card {
-            0%, 100% {
-                box-shadow: 0 0 5px rgba(144, 238, 144, 0.2);
+        @media (max-width: 1024px) {
+            .prices-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
-            50% {
-                box-shadow: 0 0 20px rgba(144, 238, 144, 0.4);
+            
+            .price-card:nth-child(4) {
+                grid-column: 1;
             }
-        }
-
-        .accepted ul li:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .accepted ul li:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .accepted ul li:nth-child(3) {
-            animation-delay: 1s;
-        }
-
-        .accepted ul li:nth-child(4) {
-            animation-delay: 1.5s;
-        }
-
-        .accepted ul li:nth-child(5) {
-            animation-delay: 2s;
-        }
-
-        .accepted ul li:nth-child(6) {
-            animation-delay: 2.5s;
-        }
-
-        .accepted ul li:nth-child(7) {
-            animation-delay: 3s;
-        }
-
-        .accepted ul li:hover {
-            transform: translateY(-5px) scale(1.03);
-            background: rgba(144, 238, 144, 0.15);
-            border-color: rgba(144, 238, 144, 0.5);
-            box-shadow: 0 8px 25px rgba(144, 238, 144, 0.4);
-            animation: none;
-        }
-
-        .accepted ul li:before {
-            content: '✨';
-            position: absolute;
-            left: 15px;
-            color: #90ee90;
-            font-weight: bold;
-            font-size: 1.3em;
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .bonus {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(218, 119, 242, 0.1));
-            border: 2px solid #ffd700;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .bonus h3 {
-            color: #ffd700;
-            font-size: 1.6em;
-            margin-bottom: 15px;
+            
+            .price-card:nth-child(5) {
+                grid-column: 2;
+            }
         }
 
         @media (max-width: 768px) {
@@ -429,201 +553,385 @@
                 font-size: 2.5em;
             }
 
-            .price-grid {
+            .section-title {
+                font-size: 2em;
+            }
+
+            .prices-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
 
-            .section {
-                padding: 25px;
+            .questions-grid {
+                grid-template-columns: 1fr;
             }
-        }
 
-        @media (max-width: 1200px) and (min-width: 769px) {
-            .price-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .social-links {
+                flex-direction: column;
+                align-items: center;
             }
-            
-            .price-card:nth-child(5) {
-                grid-column: 2;
+
+            .social-btn {
+                width: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
+    <div class="bg-pattern"></div>
+    <div class="stars-container" id="starsContainer"></div>
     
     <div class="container">
         <header>
-            <h1>🌙 Tarot Místico 🌙</h1>
-            <p class="subtitle">Desperte sua intuição e encontre respostas no universo</p>
+            <div class="header-ornament">★ ✦ ★</div>
+            <h1>TAROT MÍSTICO</h1>
+            <p class="tagline">Consultas Espirituais & Orientação</p>
+            
+            <div class="ornament-line">
+                <span class="ornament-symbol">◆</span>
+            </div>
+
+            <div class="social-links">
+                <a href="SEU_LINK_DO_TIKTOK" target="_blank" class="social-btn"><span>TIKTOK</span></a>
+                <a href="SEU_LINK_DO_INSTAGRAM" target="_blank" class="social-btn"><span>INSTAGRAM</span></a>
+            </div>
         </header>
 
-        <section class="section">
-            <h2>✨ Valores das Consultas</h2>
-            <div class="price-grid">
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Valores das Consultas</h2>
+                <p class="section-subtitle">Escolha o pacote ideal para você</p>
+            </div>
+
+            <div class="prices-grid">
                 <div class="price-card">
-                    <div class="price-title">1 Pergunta</div>
-                    <div class="price-value">R$ 7,00</div>
-                    <div class="price-details">
-                        • 3 cartas por pergunta<br>
-                        • Áudio mínimo de 1 minuto<br>
-                        • Foto das cartas
+                    <div class="price-name">1 Pergunta</div>
+                    <div class="price-value">R$ 7</div>
+                    <div class="price-features">
+                        3 cartas<br>
+                        Áudio 1 min<br>
+                        Foto das cartas
                     </div>
                 </div>
 
                 <div class="price-card">
-                    <div class="price-title">3 Perguntas</div>
-                    <div class="price-value">R$ 15,00</div>
-                    <div class="price-details">
-                        • 3 cartas por pergunta<br>
-                        • Áudio mínimo de 1 minuto cada<br>
-                        • Foto das cartas
+                    <div class="price-name">3 Perguntas</div>
+                    <div class="price-value">R$ 15</div>
+                    <div class="price-features">
+                        3 cartas cada<br>
+                        Áudio por pergunta<br>
+                        Foto das cartas
                     </div>
                 </div>
 
                 <div class="price-card">
-                    <div class="price-title">5 Perguntas</div>
-                    <div class="price-value">R$ 20,00</div>
-                    <div class="price-details">
-                        • 3 cartas por pergunta<br>
-                        • Áudio mínimo de 1 minuto cada<br>
-                        • Foto das cartas
+                    <div class="price-name">5 Perguntas</div>
+                    <div class="price-value">R$ 20</div>
+                    <div class="price-features">
+                        3 cartas cada<br>
+                        Áudio por pergunta<br>
+                        Foto das cartas
                     </div>
                 </div>
 
                 <div class="price-card">
-                    <div class="price-title">7 Perguntas</div>
-                    <div class="price-value">R$ 25,00</div>
-                    <div class="price-details">
-                        • 3 cartas por pergunta<br>
-                        • Áudio mínimo de 1 minuto cada<br>
-                        • Foto das cartas
+                    <div class="price-name">7 Perguntas</div>
+                    <div class="price-value">R$ 25</div>
+                    <div class="price-features">
+                        3 cartas cada<br>
+                        Áudio por pergunta<br>
+                        Foto das cartas
                     </div>
                 </div>
 
                 <div class="price-card">
-                    <div class="price-title">30 Minutos</div>
-                    <div class="price-value">R$ 55,00</div>
-                    <div class="price-details">
-                        <strong>Escolha seu método:</strong><br>
-                        • 1 carta por pergunta (mais perguntas)<br>
-                        <strong>OU</strong><br>
-                        • 3 cartas por pergunta (mais detalhes)<br><br>
-                        Áudio + foto em ambos os métodos
+                    <div class="price-name">30 Minutos</div>
+                    <div class="price-value">R$ 55</div>
+                    <div class="price-features">
+                        Método 1 ou 3 cartas<br>
+                        Áudio + foto<br>
+                        Perguntas ilimitadas*
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section">
-            <h2>⏰ Horários de Atendimento</h2>
-            <div class="schedule-info">
-                <p style="font-size: 1.2em; margin-bottom: 15px;">
-                    <strong>Segunda a Sexta:</strong> 15h às 18h (por ordem de chegada)
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Horários de Atendimento</h2>
+            </div>
+
+            <div class="schedule-highlight">
+                <p><strong>Segunda a Sexta:</strong> 15h às 18h</p>
+                <p style="font-size: 0.95em; color: #b794f6;">Atendimento por ordem de chegada</p>
+                <div class="ornament-line">
+                    <span class="ornament-symbol">◆</span>
+                </div>
+                <p><strong>Sábado e Domingo:</strong> Apenas com agendamento</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <strong>Atendimento fora do horário?</strong><br>
+                    Agende com 1 dia de antecedência
+                </div>
+                <div class="info-card">
+                    Não consegui responder até 18h?<br>
+                    <span class="highlight-text">Ganhe 1 pergunta extra grátis</span>
+                </div>
+                <div class="info-card">
+                    Te aviso quando iniciar<br>
+                    suas tiragens
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="info-section">
+                <h3>Como Funciona</h3>
+                
+                <div class="info-grid">
+                    <div>
+                        <h4 style="color: #e0c3ff; margin-bottom: 15px;">Consultas 1-7 perguntas</h4>
+                        <div class="info-card">Envie todas as perguntas de uma vez</div>
+                        <div class="info-card">Envie comprovante + nome completo</div>
+                        <div class="info-card">Informe nomes envolvidos (se houver)</div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #e0c3ff; margin-bottom: 15px;">Consulta 30 minutos</h4>
+                        <div class="info-card">Escolha o método antes</div>
+                        <div class="info-card">Envie comprovante para iniciar</div>
+                        <div class="info-card">Finalizo última pergunta dentro do tempo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Perguntas Não Aceitas</h2>
+            </div>
+
+            <div class="questions-grid">
+                <div class="question-item denied-item">Sobre traição</div>
+                <div class="question-item denied-item">Manipular alguém</div>
+                <div class="question-item denied-item">Previsões exatas de tempo</div>
+                <div class="question-item denied-item">Privacidade de terceiros</div>
+                <div class="question-item denied-item">Controle absoluto</div>
+                <div class="question-item denied-item">Decisões ilegais</div>
+                <div class="question-item denied-item">Respostas sim/não</div>
+                <div class="question-item denied-item">Questões médicas</div>
+                <div class="question-item denied-item">Morte/acidentes</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Perguntas Aceitas</h2>
+            </div>
+
+            <div class="questions-grid">
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Autoconhecimento</div>
+                    <div class="accepted-desc">Emoções e potenciais</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Orientação</div>
+                    <div class="accepted-desc">Como agir e decidir</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Reflexão</div>
+                    <div class="accepted-desc">Clareza sobre situações</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Energia do Momento</div>
+                    <div class="accepted-desc">O que vibra em você</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Relacionamentos</div>
+                    <div class="accepted-desc">Melhorar vínculos</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Possibilidades</div>
+                    <div class="accepted-desc">Caminhos disponíveis</div>
+                </div>
+                <div class="question-item accepted-item">
+                    <div class="accepted-title">Espiritualidade</div>
+                    <div class="accepted-desc">Propósito de vida</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="bonus-section">
+                <h3>★ Programa de Indicação ★</h3>
+                <p>
+                    Cada indicação comprovada = <span class="highlight-text">1 pergunta gratuita</span><br>
+                    com 3 cartas e áudio de 1 minuto
                 </p>
-                <p style="font-size: 1.1em; color: #ffd700;">
-                    <strong>Sábado e Domingo:</strong> Apenas com agendamento prévio
-                </p>
-            </div>
-
-            <div class="info-box">
-                <div class="list-item">
-                    <strong>Atendimento fora do horário?</strong> É possível! Agende comigo com pelo menos 1 dia de antecedência.
-                </div>
-                <div class="list-item">
-                    Se eu não conseguir responder sua pergunta até às 18h devido ao fluxo intenso, você receberá <span class="highlight">1 pergunta extra gratuita</span> que será respondida no dia seguinte no horário de atendimento.
-                </div>
-                <div class="list-item">
-                    Eu aviso quando inicio suas tiragens para você acompanhar.
-                </div>
             </div>
         </section>
 
-        <section class="section">
-            <h2>📋 Como Funciona</h2>
-            
-            <div class="info-box">
-                <h3 style="color: #da77f2; margin-bottom: 15px;">Para consultas de 1 a 7 perguntas:</h3>
-                <div class="list-item">Envie todas as suas perguntas de uma vez</div>
-                <div class="list-item">Envie o comprovante de pagamento com seu nome completo</div>
-                <div class="list-item">Se houver outras pessoas envolvidas, informe os nomes delas</div>
+        <section class="cta-section">
+            <div class="ornament-line">
+                <span class="ornament-symbol">◆</span>
             </div>
-
-            <div class="info-box">
-                <h3 style="color: #da77f2; margin-bottom: 15px;">Para consultas de 30 minutos:</h3>
-                <div class="list-item">Escolha previamente o método (1 carta ou 3 cartas por pergunta)</div>
-                <div class="list-item">Envie o comprovante de pagamento para iniciar</div>
-                <div class="list-item"><strong>Importante:</strong> O contador inicia quando começo a consulta. Responderei a última pergunta que conseguir finalizar dentro dos 30 minutos, não necessariamente a última que você enviar.</div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>🚫 Perguntas Não Aceitas</h2>
-            <div class="denied">
-                <ul style="list-style: none;">
-                    <li>Sobre traição (ex: "ele está me traindo?")</li>
-                    <li>Com intenção de manipular alguém (ex: "como fazer ele voltar?")</li>
-                    <li>Previsões exatas de tempo (ex: "em que dia vou conseguir emprego?")</li>
-                    <li>Que violem a privacidade de terceiros sem envolvimento direto</li>
-                    <li>Que busquem controle absoluto sem esforço próprio</li>
-                    <li>Decisões ilegais ou antiéticas</li>
-                    <li>Respostas fechadas (sim/não) sem abertura para reflexão</li>
-                    <li>Morte ou acidentes com tom fatalista</li>
-                    <li>Confirmar medos irracionais</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>✅ Perguntas Aceitas</h2>
-            <div class="accepted">
-                <ul style="list-style: none;">
-                    <li><strong>Autoconhecimento:</strong> Compreenda suas emoções, padrões e potenciais</li>
-                    <li><strong>Orientação:</strong> Receba conselhos sobre como agir e se posicionar</li>
-                    <li><strong>Reflexão sobre situações:</strong> Ganhe clareza sobre o que está acontecendo</li>
-                    <li><strong>Energia do momento:</strong> Entenda o que está vibrando em sua vida</li>
-                    <li><strong>Relacionamentos:</strong> Como melhorar e compreender seus vínculos (foco em você)</li>
-                    <li><strong>Caminhos e possibilidades:</strong> Explore alternativas e escolhas disponíveis</li>
-                    <li><strong>Espiritualidade e propósito:</strong> Conecte-se com seu eu interior e missão de vida</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="bonus">
-                <h3>🎁 Programa de Indicação</h3>
-                <p style="font-size: 1.2em; line-height: 1.8;">
-                    A cada indicação comprovada, você ganha <span class="highlight">1 pergunta gratuita</span> com 3 cartas e áudio de 1 minuto!
-                </p>
-            </div>
-        </section>
-
-        <section class="section" style="text-align: center;">
-            <h2>💜 Agende Sua Consulta</h2>
-            <p style="font-size: 1.2em; margin: 25px 0; line-height: 1.8;">
-                Entre em contato pelo WhatsApp e deixe o universo guiar suas respostas
+            <h2 class="section-title">Agende Sua Consulta</h2>
+            <p style="font-size: 1.15em; color: #c9b3e6;">
+                Entre em contato pelo WhatsApp
             </p>
-                <a href="https://wa.me/5534988894192?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta%20com%20voce!" class="whatsapp-btn" target="_blank">  📱 Chamar no WhatsApp
+            <a href="https://wa.me/5534988894192?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta%20com%20você!%20vim%20pelo%20seu%20site" class="cta-btn" target="_blank">
+                CHAMAR NO WHATSAPP
             </a>
-            <p style="color: #b197fc; margin-top: 15px; font-style: italic;">
-            </p>
         </section>
     </div>
 
     <script>
         // Criar estrelas animadas
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 100; i++) {
+        const starsContainer = document.getElementById('starsContainer');
+        for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
             star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (2 + Math.random() * 2) + 's';
             starsContainer.appendChild(star);
         }
+
+        // Estrelas cadentes aleatórias
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+            document.body.appendChild(star);
+            
+            star.style.animation = 'shoot 1.5s ease-out forwards';
+            
+            setTimeout(() => star.remove(), 1500);
+        }
+
+        setInterval(createShootingStar, 4000);
+
+        // Partículas ao mover o mouse
+        let mouseTimeout;
+        document.addEventListener('mousemove', (e) => {
+            clearTimeout(mouseTimeout);
+            mouseTimeout = setTimeout(() => {
+                if (Math.random() > 0.85) {
+                    createParticle(e.clientX, e.clientY);
+                }
+            }, 50);
+        });
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            
+            const angleX = (Math.random() - 0.5) * 100;
+            const angleY = (Math.random() - 0.5) * 100;
+            particle.style.setProperty('--x', angleX + 'px');
+            particle.style.setProperty('--y', angleY + 'px');
+            
+            document.body.appendChild(particle);
+            
+            particle.style.animation = 'particle-float 1s ease-out forwards';
+            
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+        // Explosão de partículas ao clicar em botões
+        document.querySelectorAll('.cta-btn, .social-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        createParticle(centerX, centerY);
+                    }, i * 30);
+                }
+            });
+        });
+
+        // Animação de entrada dos cards ao fazer scroll
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.price-card, .question-item, .info-card, .section-header').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Efeito parallax suave no header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.3}px)`;
+                header.style.opacity = 1 - (scrolled / 500);
+            }
+        });
+
+        // Hover nos cards de preço com efeito ripple
+        document.querySelectorAll('.price-card').forEach(card => {
+            card.addEventListener('mouseenter', function(e) {
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.background = 'rgba(157, 78, 221, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.left = e.clientX - rect.left + 'px';
+                ripple.style.top = e.clientY - rect.top + 'px';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.animation = 'ripple-effect 0.8s ease-out';
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 800);
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-effect {
+                0% {
+                    width: 10px;
+                    height: 10px;
+                    opacity: 1;
+                }
+                100% {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
