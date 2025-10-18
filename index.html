@@ -1274,56 +1274,6 @@
                 }
             });
         }
-        // Carregar feedbacks do localStorage
-        function loadFeedbacks() {
-            const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
-            displayFeedbacks(feedbacks);
-        }
-        function displayFeedbacks(feedbacks) {
-            const container = document.getElementById('feedbacksContainer');
-            container.innerHTML = '';
-            if (feedbacks.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #b794f6; grid-column: 1/-1;">Nenhum depoimento ainda. Seja o primeiro!</p>';
-                return;
-            }
-            feedbacks.reverse().forEach((feedback, index) => {
-                const card = document.createElement('div');
-                card.className = 'feedback-card';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                const starsHtml = '★'.repeat(feedback.rating) + '☆'.repeat(5 - feedback.rating);
-                card.innerHTML = `
-                    <button class="delete-feedback-btn" data-index="${feedbacks.length - 1 - index}">Remover</button>
-                    <div class="feedback-header">
-                        <div class="feedback-name">${feedback.name}</div>
-                        <div class="feedback-stars">${starsHtml}</div>
-                    </div>
-                    <div class="feedback-text">${feedback.text}</div>
-                    <div class="feedback-date">${feedback.date}</div>
-                `;
-                container.appendChild(card);
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 100 * index);
-            });
-            document.querySelectorAll('.delete-feedback-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const index = parseInt(this.getAttribute('data-index'));
-                    deleteFeedback(index);
-                });
-            });
-        }
-        function deleteFeedback(index) {
-            if (confirm('Tem certeza que deseja remover este depoimento?')) {
-                const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
-                feedbacks.splice(index, 1);
-                localStorage.setItem('tarotFeedbacks', JSON.stringify(feedbacks));
-                loadFeedbacks();
-            }
-        }
         // Toggle para mostrar/ocultar feedbacks
         document.getElementById('toggleFeedbacksBtn').addEventListener('click', function() {
             const container = document.getElementById('feedbacksContainer');
@@ -1337,46 +1287,6 @@
                 loadFeedbacks();
             }
         });
-        // Enviar feedback
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (selectedRating === 0) {
-                alert('Por favor, selecione uma avaliação de estrelas!');
-                return;
-            }
-            const name = document.getElementById('feedbackName').value;
-            const text = document.getElementById('feedbackText').value;
-            const feedback = {
-                name: name,
-                rating: selectedRating,
-                text: text,
-                date: new Date().toLocaleDateString('pt-BR')
-            };
-            const feedbacks = JSON.parse(localStorage.getItem('tarotFeedbacks') || '[]');
-            feedbacks.push(feedback);
-            localStorage.setItem('tarotFeedbacks', JSON.stringify(feedbacks));
-            // Explosão de partículas
-            const btn = document.querySelector('.submit-btn');
-            const rect = btn.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    createParticle(centerX, centerY);
-                }, i * 20);
-            }
-            // Limpar formulário
-            document.getElementById('feedbackName').value = '';
-            document.getElementById('feedbackText').value = '';
-            selectedRating = 0;
-            updateStars();
-            setTimeout(() => {
-                alert('Obrigada pelo seu feedback! ✨');
-                loadFeedbacks();
-            }, 500);
-        });
-        // Carregar feedbacks ao iniciar
-        loadFeedbacks();
         // Mobile menu toggle
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
