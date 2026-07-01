@@ -629,46 +629,6 @@
             font-size: 1.1em;
             letter-spacing: 1px;
         }
-        .feedback-section {
-            margin: 60px 0;
-        }
-        .view-feedbacks-btn {
-            background: rgba(90, 24, 154, 0.2);
-            border: 2px solid #5a189a;
-            color: #e0c3ff;
-            padding: 12px 30px;
-            font-size: 0.95em;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin: 20px auto;
-            display: block;
-        }
-        .view-feedbacks-btn:hover {
-            border-color: #9d4edd;
-            background: rgba(157, 78, 221, 0.2);
-            transform: translateY(-2px);
-        }
-        .feedback-form-container {
-            background: linear-gradient(145deg, rgba(90, 24, 154, 0.15), rgba(13, 2, 33, 0.3));
-            border: 2px solid #5a189a;
-            padding: 30px;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .feedback-form-container h3 {
-            font-size: 1.3em;
-        }
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
         .form-group {
             display: flex;
             flex-direction: column;
@@ -739,96 +699,7 @@
         .submit-btn:active {
             transform: translateY(-1px);
         }
-        .feedbacks-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .feedback-card {
-            background: linear-gradient(145deg, rgba(90, 24, 154, 0.15), rgba(13, 2, 33, 0.4));
-            border: 2px solid #5a189a;
-            padding: 25px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .delete-feedback-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(185, 28, 28, 0.3);
-            border: 1px solid rgba(185, 28, 28, 0.5);
-            color: #fca5a5;
-            padding: 5px 10px;
-            font-size: 0.85em;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-        .feedback-card:hover .delete-feedback-btn {
-            opacity: 1;
-        }
-        .delete-feedback-btn:hover {
-            background: rgba(185, 28, 28, 0.5);
-            border-color: rgba(185, 28, 28, 0.8);
-            transform: scale(1.05);
-        }
-        .feedback-toggle-section {
-            text-align: center;
-            margin: 30px 0;
-        }
-        .feedback-card::before {
-            content: '"';
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            font-size: 4em;
-            color: rgba(157, 78, 221, 0.2);
-                    font-family: 'Cinzel Decorative', serif;
-        }
-        .feedback-card:hover {
-            border-color: #9d4edd;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
-        }
-        .feedback-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        .feedback-name {
-            color: #e0c3ff;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-        .feedback-stars {
-            color: #fbbf24;
-            font-size: 1.2em;
-        }
-        .feedback-text {
-            color: #c9b3e6;
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
-        }
-        .feedback-date {
-            color: #7c3aed;
-            font-size: 0.85em;
-            margin-top: 15px;
-            text-align: right;
-        }
         @media (max-width: 768px) {
-            .feedback-form-container {
-                padding: 25px;
-            }
-            .feedbacks-container {
-                grid-template-columns: 1fr;
-            }
             .social-links {
                 flex-direction: column;
                 align-items: center;
@@ -1252,48 +1123,6 @@
                 this.appendChild(ripple);
                 setTimeout(() => ripple.remove(), 800);
             });
-        });
-        // Sistema de avaliação por estrelas
-        let selectedRating = 0;
-        const stars = document.querySelectorAll('.star-rating');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                selectedRating = parseInt(this.getAttribute('data-rating'));
-                updateStars();
-            });
-            star.addEventListener('mouseenter', function() {
-                const rating = parseInt(this.getAttribute('data-rating'));
-                stars.forEach((s, index) => {
-                    if (index < rating) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-            });
-        });
-        document.getElementById('ratingContainer').addEventListener('mouseleave', updateStars);
-        function updateStars() {
-            stars.forEach((s, index) => {
-                if (index < selectedRating) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-        }
-        // Toggle para mostrar/ocultar feedbacks
-        document.getElementById('toggleFeedbacksBtn').addEventListener('click', function() {
-            const container = document.getElementById('feedbacksContainer');
-            const isVisible = container.classList.contains('visible');
-            if (isVisible) {
-                container.classList.remove('visible');
-                this.textContent = 'Ver Depoimentos';
-            } else {
-                container.classList.add('visible');
-                this.textContent = 'Ocultar Depoimentos';
-                loadFeedbacks();
-            }
         });
         // Mobile menu toggle
         const navToggle = document.getElementById('navToggle');
